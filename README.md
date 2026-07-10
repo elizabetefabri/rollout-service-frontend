@@ -78,6 +78,13 @@ npm install
 npm start:dev
 ```
 
+## 🔌 Integração com o backend
+
+Este template já vem com `HttpClient`, `environments/` (dev/prod) e um `ApiService` genérico
+configurados para consumir o [template de backend Go + MongoDB + Docker](../../template-backend-go-mongo-docker).
+Veja **[INTEGRACAO-BACKEND.md](INTEGRACAO-BACKEND.md)** para o passo a passo completo: como as
+portas se conectam, CORS, e como criar o serviço de um novo recurso.
+
 ## 🧪 Testes
 
 ```bash
@@ -132,7 +139,7 @@ npm run test:coverage
 - [ ] Configurar rotas.
 - [ ] Configurar layout principal.
 - [ ] Criar header da página.
-- [ ] Integrar com backend.
+- [x] Integrar com backend.
 - [ ] Criar testes unitários.
 - [ ] Configurar coverage.
 - [ ] Configurar pipeline.
