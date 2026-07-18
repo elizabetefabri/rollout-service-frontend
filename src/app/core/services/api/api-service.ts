@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { environment } from '../../../environment/environment';
-import { ApiResponse } from '../../../shared/types/api-response.interface';
+import { ApiResponse } from '../../types/api-response.type';
 
 
 /**

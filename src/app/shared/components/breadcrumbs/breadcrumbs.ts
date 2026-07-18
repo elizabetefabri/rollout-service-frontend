@@ -1,6 +1,6 @@
 import { Component, computed, OnDestroy, OnInit, signal } from '@angular/core';
 import { NavigationEnd, Router, RouterLink } from '@angular/router';
-import { BreadcrumbItem } from '../../types/breadcrumb.interface';
+import { BreadcrumbItem } from '../../../core/types/breadcrumb.type';
 import { filter, Subscription } from 'rxjs';
 import { BreadcrumbService } from '../../../core/services/Breadcrumb/breadcrumb-service';
 
