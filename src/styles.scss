@@ -2,7 +2,6 @@
 @use 'shared/styles/abstracts/variables' as vars;
 @use 'shared/styles/base/reset';
 @use 'shared/styles/base/typography';
-// @import 'primeicons/primeicons.css';
 
 :root {
   --color-white: #ffffff;
@@ -16,7 +15,7 @@
   --color-neutral-500: #b8b2aa;
   --color-neutral-600: #8a887f;
   --color-neutral-700: #6b6a64;
-  --color-neutral-800: #4d4d47;
+  --color-neutral-800: #3b3b3b;
   --color-neutral-900: #201f25;
 
   // Primary
@@ -25,6 +24,7 @@
   --color-primary-200: #e59a9a;
   --color-primary-300: #d88787;
   --color-primary-400: #cb7676;
+  --color-primary-500: #FF8899;
 
   // Accent
   --color-accent-100: #fde5bc;
@@ -50,6 +50,12 @@
   // Info
 
   --color-info-50: #eaf4fd;
-  --color-info-200: #8ebde8;
-  --color-info-500: #356ea6
+  --color-info-200: #add4da;
+  --color-info-500: #19b0c7;
+}
+
+/* Cor padrão de todos os ícones do sistema.
+   Componentes podem sobrescrever pontualmente (ex: olho do password). */
+app-icon {
+  color: var(--color-neutral-800);
 }

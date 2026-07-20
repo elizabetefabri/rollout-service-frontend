@@ -1,0 +1,212 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
+.sb {
+  display: flex;
+  flex-direction: column;
+  width: 7rem;
+  align-items: center;
+  height: 100%;
+  background: var(--color-background-default);
+  border-right: 1px solid var(--color-card-border);
+}
+
+/* ---- Logo ---- */
+.sb__logo {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.625rem;
+  padding: 1.125rem 1rem;
+  border-bottom: 1px solid var(--color-card-border);
+}
+
+.sb__logo-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.sb__logo-image {
+  width: 3rem;
+}
+
+/* ---- Navegação ---- */
+.sb__nav {
+  width: 100%;
+  flex: 1;
+  overflow: visible;
+  /* sem padding para o hover ocupar 100% da largura */
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+/* Item (link ou botão) */
+.sb-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1.125rem 1rem;
+  /* hover ocupa 100%: sem border-radius */
+  border-radius: 0;
+  text-decoration: none;
+  color: var(--color-text-title);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  transition: background-color 0.15s ease;
+
+  &:hover {
+    background: var(--color-primary-50);
+  }
+
+  &__icon {
+    flex-shrink: 0;
+    color: var(--color-text-title);
+  }
+
+  &__label {
+    flex: 1;
+    font-size: 0.7rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: var(--color-text-title);
+  }
+
+  &__caret {
+    flex-shrink: 0;
+    color: var(--color-text-secondary);
+    transition: transform 0.2s ease;
+  }
+
+  /* Rota/grupo ativo */
+  &--active {
+    color: var(--color-primary-400);
+    font-weight: 600;
+
+    .sb-item__icon,
+    .sb-item__label {
+      color: var(--color-primary-400);
+    }
+  }
+}
+
+/* ---- Grupo Rollouts + flyout ---- */
+.sb-group {
+  position: relative;
+  width: 100%;
+}
+
+.sb-group--open .sb-item__caret {
+  transform: rotate(90deg);
+}
+
+.sb-flyout {
+  position: absolute;
+  top: 0;
+  left: calc(100% + 0.5rem);
+  min-width: 15rem;
+  z-index: 60;
+  padding: 0.5rem;
+
+  background: var(--color-card-background);
+
+
+  opacity: 0;
+  visibility: hidden;
+  transform: translateX(-0.25rem);
+  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+
+  /* ponte invisível: mantém o hover ao atravessar o gap até o flyout */
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -0.5rem;
+    width: 0.5rem;
+    height: 100%;
+  }
+}
+
+/* Abre no hover do grupo (e continua abrindo por clique via --open) */
+.sb-group:hover .sb-flyout,
+.sb-group--open .sb-flyout {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(0);
+}
+
+.sb-flyout__title {
+  display: block;
+  padding: 0.25rem 0.5rem 0.5rem;
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-text-title);
+}
+
+.sb-flyout__link {
+  display: flex;
+  padding: 0.25rem 0.5rem 0.5rem;
+  letter-spacing: 0.04em;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  font-size: 0.875rem;
+  color: var(--color-text-body);
+  transition: background-color 0.15s ease;
+
+  app-icon {
+    color: var(--color-primary-400);
+    flex-shrink: 0;
+  }
+
+  &:hover {
+    background: var(--color-primary-50);
+  }
+
+  &--active {
+    background: var(--color-primary-50);
+    color: var(--color-text-title);
+    font-weight: 600;
+  }
+}
+
+/* ---- Rodapé ---- */
+.sb__footer {
+  width: 100%;
+  height: 7rem;
+  padding: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  gap: 0.5rem;
+  border-top: 1px solid var(--color-card-border);
+}
+
+:host ::ng-deep .sb__avatar {
+  background: var(--color-neutral-900);
+  color: var(--color-white);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.sb__logout {
+  app-icon {
+    color: var(--color-primary-400);
+  }
+}

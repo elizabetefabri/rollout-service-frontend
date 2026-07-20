@@ -1,7 +1,8 @@
 @use '../abstracts/variables' as vars;
 @use 'sass:color';
 
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;400;600;700;800&display=swap');
+
 
 body {
   font-family: vars.$font-family-base;

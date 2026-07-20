@@ -19,7 +19,7 @@ $breakpoints: (
 
 :root {
   // Background
-  --color-background-page: var(--color-neutral-100);
+  --color-background-page: var(--color-white);
   --color-background-default: var(--color-white);
 
   // Header
@@ -76,7 +76,7 @@ $breakpoints: (
 }
 
 
-$font-family-base: "Oswald", sans-serif;
+$font-family-base: "Open Sans", sans-serif;
 $font-size-base: 1rem;
 $font-size-lg: 1.25rem;
 $font-size-sm: 0.875rem;
