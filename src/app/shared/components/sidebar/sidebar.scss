@@ -4,6 +4,9 @@
 }
 
 .sb {
+  /* largura do sidebar — usada para posicionar o sidesheet fixo */
+  --sb-width: 7rem;
+
   display: flex;
   flex-direction: column;
   width: 7rem;
@@ -103,7 +106,7 @@
   }
 }
 
-/* ---- Grupo Rollouts + flyout ---- */
+/* ---- Grupo + sidesheet ---- */
 .sb-group {
   position: relative;
   width: 100%;
@@ -114,15 +117,27 @@
 }
 
 .sb-flyout {
+  /* posicionado relativo ao grupo, aparece à direita do sidebar */
   position: absolute;
   top: 0;
-  left: calc(100% + 0.5rem);
+  left: 100%;
+  height: auto;
+  max-height: 80vh;
   min-width: 15rem;
   z-index: 60;
-  padding: 0.5rem;
-
+  padding: 1.5rem 0 1.5rem 0.5rem;
   background: var(--color-card-background);
+  display: flex;
 
+  justify-content: center;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+
+  border: 1px solid var(--color-card-border);
+  border-left: none;
+  border-radius: 0 1rem 1rem 0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   opacity: 0;
   visibility: hidden;
@@ -160,6 +175,8 @@
 
 .sb-flyout__link {
   display: flex;
+  /* o <a> é o bloco inteiro: hover ocupa toda a largura */
+  width: 100%;
   padding: 0.25rem 0.5rem 0.5rem;
   letter-spacing: 0.04em;
   align-items: center;
@@ -168,11 +185,6 @@
   font-size: 0.875rem;
   color: var(--color-text-body);
   transition: background-color 0.15s ease;
-
-  app-icon {
-    color: var(--color-primary-400);
-    flex-shrink: 0;
-  }
 
   &:hover {
     background: var(--color-primary-50);
@@ -199,7 +211,7 @@
 }
 
 :host ::ng-deep .sb__avatar {
-  background: var(--color-neutral-900);
+  background: var(--color-neutral-800);
   color: var(--color-white);
   font-size: 0.75rem;
   font-weight: 600;
@@ -207,6 +219,39 @@
 
 .sb__logout {
   app-icon {
-    color: var(--color-primary-400);
+    color: var(--color-text-title);
+  }
+}
+
+/* ---- Responsivo ----
+   No mobile o sidebar vira drawer (com transform), o que quebraria o
+   position:fixed do sidesheet. Nessa faixa ele expande inline, só por clique. */
+@media (max-width: 63.9375rem) {
+  .sb-flyout {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-width: 0;
+    padding: 0.5rem;
+    gap: 0.5rem;
+    border: none;
+    border-radius: 0;
+    background: var(--color-background-page);
+    display: none;
+    opacity: 1;
+    visibility: visible;
+    transform: none;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .sb-group:hover .sb-flyout {
+    display: none;
+  }
+
+  .sb-group--open .sb-flyout {
+    display: flex;
   }
 }

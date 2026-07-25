@@ -20,7 +20,24 @@ const config: Config = {
     'src/app/**/*.ts',
     '!src/app/**/*.module.ts',
     '!src/main.ts',
+    '!src/**/*.spec.ts',
+    '!src/**/*.d.ts',
   ],
+  coverageReporters: ['html', 'lcov', 'text', 'text-summary'],
+  coverageThreshold: {
+    global: {
+      branches: 70,
+      functions: 70,
+      lines: 70,
+      statements: 70,
+    },
+  },
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1',
+  },
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true,
 };
 
 export default config;
