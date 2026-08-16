@@ -8,38 +8,42 @@
 
   <!-- Navegação -->
   <div class="sb__nav">
-    @for (link of topLinks; track link.route) {
-    <a class="sb-item" [routerLink]="link.route" routerLinkActive="sb-item--active">
-      <app-icon class="sb-item__icon" [name]="link.icon" [size]="20" />
-      <span class="sb-item__label">{{ link.label }}</span>
-    </a>
-    }
+    @for (item of navItems; track item.label) {
+      @if (item.links) {
+        <!-- Grupo: abre o sidesheet fixo à direita -->
+        <div class="sb-group" [class.sb-group--open]="isOpen(item)">
+          <button
+            type="button"
+            class="sb-item sb-item--btn"
+            [class.sb-item--active]="isGroupActive(item)"
+            (click)="toggleGroup(item)"
+            aria-haspopup="true"
+            [attr.aria-expanded]="isOpen(item)"
+          >
+            <app-icon class="sb-item__icon" [name]="item.icon" [size]="20" />
+            <span class="sb-item__label">{{ item.label }}</span>
+          </button>
 
-    <!-- Rollouts: flyout à direita (fora do sidebar) -->
-    <div class="sb-group" [class.sb-group--open]="rolloutOpen()">
-      <button type="button" class="sb-item sb-item--btn" [class.sb-item--active]="rolloutActive()"
-        (click)="toggleRollout()" aria-haspopup="true" [attr.aria-expanded]="rolloutOpen()">
-        <app-icon class="sb-item__icon" name="layout-dashboard" [size]="20" />
-        <span class="sb-item__label">Rollouts</span>
-
-      </button>
-
-      <div class="sb-flyout" (mouseleave)="closeRollout()">
-        <span class="sb-flyout__title">Rollouts</span>
-        @for (link of rolloutLinks; track link.route) {
-        <a class="sb-flyout__link" [routerLink]="link.route" routerLinkActive="sb-flyout__link--active"
-          (click)="closeRollout()">
-          <span>{{ link.label }}</span>
+          <div class="sb-flyout" (mouseleave)="closeGroup()">
+            @for (link of item.links; track link.route) {
+              <a
+                class="sb-flyout__link"
+                [routerLink]="link.route"
+                routerLinkActive="sb-flyout__link--active"
+                (click)="closeGroup()"
+              >
+                {{ link.label }}
+              </a>
+            }
+          </div>
+        </div>
+      } @else {
+        <!-- Link direto -->
+        <a class="sb-item" [routerLink]="item.route" routerLinkActive="sb-item--active">
+          <app-icon class="sb-item__icon" [name]="item.icon" [size]="20" />
+          <span class="sb-item__label">{{ item.label }}</span>
         </a>
-        }
-      </div>
-    </div>
-
-    @for (link of bottomLinks; track link.route) {
-    <a class="sb-item" [routerLink]="link.route" routerLinkActive="sb-item--active">
-      <app-icon class="sb-item__icon" [name]="link.icon" [size]="20" />
-      <span class="sb-item__label">{{ link.label }}</span>
-    </a>
+      }
     }
   </div>
 
@@ -48,9 +52,16 @@
     <div class="sb__user">
       <app-user-avatar />
     </div>
-    <button pButton type="button" text severity="secondary" class="sb__logout" aria-label="Sair" (click)="logout()">
+    <button
+      pButton
+      type="button"
+      text
+      severity="secondary"
+      class="sb__logout"
+      aria-label="Sair"
+      (click)="logout()"
+    >
       <app-icon name="arrow-right-from-line" [size]="20" />
-      <!-- <lucide-icon name="arrow-right-from-line"></lucide-icon> -->
     </button>
   </div>
 </nav>

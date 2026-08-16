@@ -2,11 +2,9 @@ import { ChangeDetectionStrategy, Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 
-import { Header } from '../header/header';
 import { Footer } from '../footer/footer';
-import { Sidebar } from '../sidebar/sidebar';
-import { Breadcrumbs } from '../breadcrumbs/breadcrumbs';
 import { Icon } from '../icon/icon';
+import { Sidebar } from '../sidebar/sidebar';
 
 /**
  * Layout corporativo: sidebar (esquerda), topbar com header, área principal
@@ -19,7 +17,7 @@ import { Icon } from '../icon/icon';
   selector: 'app-layout',
   standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [RouterOutlet, ButtonModule, Header, Footer, Sidebar, Breadcrumbs, Icon],
+  imports: [RouterOutlet, ButtonModule, Footer, Sidebar, Icon],
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })

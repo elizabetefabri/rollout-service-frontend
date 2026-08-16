@@ -9,10 +9,22 @@ import { AuthService } from '../../../core/services/auth/auth.service';
 import { Icon } from '../icon/icon';
 import { UserAvatar } from '../user-avatar/user-avatar';
 
+/** Link simples de navegação. */
 interface NavLink {
   label: string;
   icon: string;
   route: string;
+}
+
+/**
+ * Item do menu: link direto (`route`) ou grupo com sublinks (`links`),
+ * que abre o sidesheet fixo à direita do sidebar.
+ */
+interface NavItem {
+  label: string;
+  icon: string;
+  route?: string;
+  links?: NavLink[];
 }
 
 @Component({
@@ -27,24 +39,34 @@ export class Sidebar {
   private readonly auth = inject(AuthService);
   private readonly router = inject(Router);
 
-  readonly topLinks: NavLink[] = [
-    { label: 'Calendário', icon: 'calendar-minus-2', route: '/calendario' },
-    { label: 'Quality Budget', icon: 'tool-case', route: '/quality-budget' },
-    { label: 'Dogfooding', icon: 'paw-print', route: '/dogfooding' },
-  ];
-
   readonly rolloutLinks: NavLink[] = [
     { label: 'Release Trains', icon: 'git-branch', route: '/release-trains' },
     { label: 'Applications', icon: 'box', route: '/applications' },
     { label: 'Release Trains Schedulers', icon: 'calendar', route: '/release-train-schedulers' },
   ];
 
-  readonly bottomLinks: NavLink[] = [
-    { label: 'Configurações', icon: 'settings', route: '/configuracoes' },
+  readonly budgetLinks: NavLink[] = [
+    { label: 'Lista de eventos', icon: 'git-branch', route: '/lista-eventos' },
+    { label: 'Consultar pontuação', icon: 'box', route: '/consultar-pontuacao' },
+    { label: 'Registrar melhorias', icon: 'calendar', route: '/registrar-melhorias' },
   ];
 
-  /** Flyout do Rollouts aberto. */
-  readonly rolloutOpen = signal(false);
+  readonly bestTestingLinks: NavLink[] = [
+    { label: 'Cadastro de usuários beta', icon: 'git-branch', route: '/user-beta' },
+    { label: 'Configurar dispositivo', icon: 'box', route: '/configurar-dispositivo' },
+  ];
+
+  /** Navegação completa: links diretos e grupos com sublinks. */
+  readonly navItems: NavItem[] = [
+    { label: 'Calendário', icon: 'calendar-minus-2', route: '/calendario' },
+    { label: 'Quality Budget', icon: 'tool-case', links: this.budgetLinks },
+    { label: 'Abrir incidente', icon: 'users', route: '/abrir-incidente' },
+    { label: 'Rollouts', icon: 'layout-dashboard', links: this.rolloutLinks },
+    { label: 'Best testing', icon: 'users', links: this.bestTestingLinks },
+  ];
+
+  /** Rótulo do grupo com sidesheet aberto (null = nenhum). */
+  readonly openGroup = signal<string | null>(null);
 
   /** URL atual (reativa) para destacar o grupo pelo contexto. */
   private readonly url = toSignal(
@@ -55,17 +77,29 @@ export class Sidebar {
     { initialValue: this.router.url },
   );
 
-  /** Rollouts está ativo quando a rota atual é uma de suas sub-rotas. */
-  readonly rolloutActive = computed(() =>
-    this.rolloutLinks.some((l) => this.url().startsWith(l.route)),
-  );
+  /** Rótulo do grupo ativo conforme a rota atual. */
+  private readonly activeGroup = computed(() => {
+    const current = this.url();
+    return (
+      this.navItems.find((i) => i.links?.some((l) => current.startsWith(l.route)))?.label ?? null
+    );
+  });
 
-  toggleRollout(): void {
-    this.rolloutOpen.update((v) => !v);
+  /** Um grupo está ativo quando a rota atual é uma de suas sub-rotas. */
+  isGroupActive(item: NavItem): boolean {
+    return this.activeGroup() === item.label;
   }
 
-  closeRollout(): void {
-    this.rolloutOpen.set(false);
+  isOpen(item: NavItem): boolean {
+    return this.openGroup() === item.label;
+  }
+
+  toggleGroup(item: NavItem): void {
+    this.openGroup.update((current) => (current === item.label ? null : item.label));
+  }
+
+  closeGroup(): void {
+    this.openGroup.set(null);
   }
 
   logout(): void {

@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { provideNoopAnimations } from '@angular/platform-browser/animations';
+import { provideRouter } from '@angular/router';
 
 import { ReleaseTrainsSchedulers } from './release-trains-schedulers';
 import { provideAppIcons } from '../../shared/icons/icon.registry';
@@ -10,7 +12,7 @@ describe('ReleaseTrainsSchedulers', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [ReleaseTrainsSchedulers],
-      providers: [provideAppIcons()],
+      providers: [provideAppIcons(), provideRouter([]), provideNoopAnimations()],
     }).compileComponents();
 
     fixture = TestBed.createComponent(ReleaseTrainsSchedulers);

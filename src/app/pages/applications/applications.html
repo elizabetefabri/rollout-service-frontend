@@ -1,41 +1,19 @@
 <section class="apps">
-  <!-- Toolbar: título, busca e filtros -->
+  <!-- Header da página (título, perfil e última atualização) -->
+  <app-page-header
+    title="Repositórios"
+    [profile]="profile"
+    [updatedAt]="updatedAt"
+    [showToolbarRow]="false"
+  />
+
+  <!-- Toolbar da página: subtítulo, busca e filtros (funcionais) -->
   <header class="apps__toolbar">
     <div class="apps__heading">
-      <h1 class="apps__title">Repositórios</h1>
       <p class="apps__subtitle">
         <app-icon name="layout-dashboard" [size]="16" />
         <span>Jornadas ativas</span>
       </p>
-    </div>
-
-    <div class="apps__tools">
-      <p-iconfield>
-        <p-inputicon><app-icon name="search" [size]="16" /></p-inputicon>
-        <input
-          pInputText
-          type="text"
-          placeholder="Buscar"
-          (input)="onSearch($any($event.target).value)"
-          aria-label="Buscar repositório"
-        />
-      </p-iconfield>
-
-      <button
-        pButton
-        type="button"
-        severity="secondary"
-        [outlined]="true"
-        size="small"
-        class="apps__filter-btn"
-        (click)="filtersOpen.set(true)"
-        aria-label="Filtros"
-      >
-        <app-icon name="settings-2" [size]="16" />
-        @if (activeFilterCount) {
-          <span class="apps__filter-count">{{ activeFilterCount }}</span>
-        }
-      </button>
     </div>
   </header>
 
@@ -49,7 +27,6 @@
     [refreshing]="facade.refreshing()"
     [error]="facade.error()"
     [actions]="actions"
-    [cellTemplates]="{ estado: estadoTpl, rollout: rolloutTpl, carga: cargaTpl }"
     emptyMessage="Nenhum repositório encontrado."
     errorMessage="Não foi possível carregar os repositórios."
     (lazyLoad)="onLazyLoad($event)"
@@ -57,62 +34,4 @@
     (rowClick)="onRowClick($event)"
     (retry)="facade.retry()"
   />
-
-  <!-- Templates das colunas de domínio -->
-  <ng-template #estadoTpl let-row>
-    <app-col-estado [status]="row.status" />
-  </ng-template>
-  <ng-template #rolloutTpl let-row>
-    <app-col-rollout [value]="row.rollout" />
-  </ng-template>
-  <ng-template #cargaTpl let-row>
-    <app-col-carga [value]="row.load" />
-  </ng-template>
-
-  <!-- Sidesheet de filtros -->
-  <p-drawer
-    [visible]="filtersOpen()"
-    (visibleChange)="filtersOpen.set($event)"
-    position="right"
-    header="Filtros"
-    styleClass="apps-filters"
-  >
-    <div class="apps-filters__body">
-      <label class="apps-filters__field">
-        <span class="apps-filters__label">Estado</span>
-        <p-multiSelect
-          [options]="statusOptions"
-          optionLabel="label"
-          optionValue="value"
-          [(ngModel)]="selectedStatuses"
-          display="chip"
-          placeholder="Todos os estados"
-          [style]="{ width: '100%' }"
-        />
-      </label>
-
-      <label class="apps-filters__field">
-        <span class="apps-filters__label">Público</span>
-        <p-select
-          [options]="audienceOptions"
-          optionLabel="label"
-          optionValue="value"
-          [(ngModel)]="selectedAudience"
-          placeholder="Todos"
-          [showClear]="true"
-          [style]="{ width: '100%' }"
-        />
-      </label>
-    </div>
-
-    <div class="apps-filters__actions">
-      <button pButton type="button" text severity="secondary" (click)="clearFilters()">
-        <span>Limpar</span>
-      </button>
-      <button pButton type="button" (click)="applyFilters()">
-        <app-icon name="funnel" [size]="16" />
-        <span>Aplicar</span>
-      </button>
-    </div>
-  </p-drawer>
 </section>

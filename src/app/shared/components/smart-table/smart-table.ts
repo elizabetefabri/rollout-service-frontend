@@ -1,30 +1,15 @@
-import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  TemplateRef,
-  computed,
-  input,
-  output,
-} from '@angular/core';
-import { RouterLink } from '@angular/router';
-
+import { CommonModule } from "@angular/common";
+import { ChangeDetectionStrategy, Component, computed, input, output, TemplateRef } from "@angular/core";
+import { RouterLink } from "@angular/router";
 import { ButtonModule } from 'primeng/button';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { SkeletonModule } from 'primeng/skeleton';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { TagModule } from 'primeng/tag';
 import { TooltipModule } from 'primeng/tooltip';
-
-import {
-  TableAction,
-  TableActionEvent,
-  TableBadgeSeverity,
-  TableColumn,
-  TableLazyEvent,
-  TableSortDirection,
-} from '../../../core/types/table.type';
+import { TableAction, TableActionEvent, TableBadgeSeverity, TableColumn, TableLazyEvent, TableSortDirection } from '../../../core/types/table.type';
 import { Icon } from '../icon/icon';
+
 
 /**
  * Tabela Inteligente (SmartTable).
@@ -84,6 +69,10 @@ export class SmartTable<T = any> {
   readonly actions = input<TableAction<T>[]>([]);
   /** Chave única de linha. */
   readonly dataKey = input<string>('id');
+  /** Habilita seleção por checkbox. */
+  readonly showSelection = input<boolean>(false);
+  /** Itens selecionados. */
+  readonly selectedItems = input<T[]>([]);
   /** Mensagens dos estados. */
   readonly emptyMessage = input<string>('Nenhum registro encontrado.');
   readonly errorMessage = input<string>('Não foi possível carregar os dados.');
@@ -98,6 +87,8 @@ export class SmartTable<T = any> {
   readonly rowClick = output<T>();
   /** Emite ao clicar em "Tentar novamente" no estado de erro. */
   readonly retry = output<void>();
+  /** Emite quando a seleção muda. */
+  readonly selectionChange = output<T[]>();
 
   /** Linhas-fantasma para o skeleton do loading inicial. */
   protected readonly skeletonRows = computed(() =>
@@ -169,6 +160,7 @@ export class SmartTable<T = any> {
 
   protected templateFor(col: TableColumn<T>): TemplateRef<unknown> | null {
     if (!col.templateKey) return null;
-    return this.cellTemplates()[col.templateKey] ?? null;
+    // return this.cellTemplates()[col.templateKey] ?? null;
+    return null;
   }
 }

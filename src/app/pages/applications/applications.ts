@@ -11,7 +11,9 @@ import { InputTextModule } from 'primeng/inputtext';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { SelectModule } from 'primeng/select';
 
+import { ApplicationsFacade } from '../../core/facades/applications/applications.facade';
 import { RepositoryRow } from '../../core/models/application.models';
+import { AudienceOption } from '../../core/models/audience.models';
 import { ReleaseStatus } from '../../core/types/enums.type';
 import {
   TableAction,
@@ -20,16 +22,8 @@ import {
   TableLazyEvent,
 } from '../../core/types/table.type';
 import { Icon } from '../../shared/components/icon/icon';
+import { PageHeader } from '../../shared/components/page-header/page-header';
 import { SmartTable } from '../../shared/components/smart-table/smart-table';
-import { ColEstado } from '../../shared/components/table-cells/col-estado/col-estado';
-import { ColRollout } from '../../shared/components/table-cells/col-rollout/col-rollout';
-import { ColCarga } from '../../shared/components/table-cells/col-carga/col-carga';
-import { ApplicationsFacade } from '../../core/facades/applications/applications.facade';
-
-interface Option {
-  label: string;
-  value: string;
-}
 
 /**
  * Página Repositórios (Applications) — "Jornadas ativas".
@@ -51,10 +45,8 @@ interface Option {
     MultiSelectModule,
     SelectModule,
     Icon,
-    SmartTable,
-    ColEstado,
-    ColRollout,
-    ColCarga,
+    PageHeader,
+    SmartTable
   ],
   providers: [ApplicationsFacade],
   templateUrl: './applications.html',
@@ -92,16 +84,20 @@ export class Applications implements OnInit, OnDestroy {
     { key: 'delete', label: 'Excluir', icon: 'trash-2', severity: 'danger' },
   ];
 
+  /** Dados mockados do header — virão do backend futuramente. */
+  protected readonly profile = 'Dev';
+  protected readonly updatedAt = new Date();
+
   /** Estado do sidesheet de filtros. */
   protected readonly filtersOpen = signal(false);
   protected selectedStatuses: string[] = [];
   protected selectedAudience: string | null = null;
 
-  protected readonly statusOptions: Option[] = Object.values(ReleaseStatus).map((s) => ({
+  protected readonly statusOptions: AudienceOption[] = Object.values(ReleaseStatus).map((s) => ({
     label: s,
     value: s,
   }));
-  protected readonly audienceOptions: Option[] = [
+  protected readonly audienceOptions: AudienceOption[] = [
     { label: 'Cliente', value: 'Cliente' },
     { label: 'Ituber', value: 'Ituber' },
   ];

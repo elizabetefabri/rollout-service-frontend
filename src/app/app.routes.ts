@@ -121,6 +121,45 @@ export const routes: Routes = [
         loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
         data: { title: 'Configurações', icon: 'settings' },
       },
+      {
+        path: 'abrir-incidente',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Abrir incidente', icon: 'triangle-alert' },
+      },
+
+      // Quality Budget
+      {
+        path: 'lista-eventos',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Lista de eventos', icon: 'list' },
+      },
+      {
+        path: 'consultar-pontuacao',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Consultar pontuação', icon: 'chart-column' },
+      },
+      {
+        path: 'registrar-melhorias',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Registrar melhorias', icon: 'trending-up' },
+      },
+
+      // Best testing
+      {
+        path: 'best-testing',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Best testing', icon: 'users' },
+      },
+      {
+        path: 'user-beta',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Cadastro de usuários beta', icon: 'user-plus' },
+      },
+      {
+        path: 'configurar-dispositivo',
+        loadComponent: () => import('./pages/placeholder/placeholder').then((m) => m.Placeholder),
+        data: { title: 'Configurar dispositivo', icon: 'smartphone' },
+      },
     ],
   },
   { path: '**', redirectTo: '' },

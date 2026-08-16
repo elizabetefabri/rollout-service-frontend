@@ -43,14 +43,12 @@
   width: 100%;
   flex: 1;
   overflow: visible;
-  /* sem padding para o hover ocupar 100% da largura */
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 0.125rem;
 }
 
-/* Item (link ou botão) */
 .sb-item {
   display: flex;
   flex-direction: column;
@@ -58,7 +56,6 @@
   gap: 1rem;
   width: 100%;
   padding: 1.125rem 1rem;
-  /* hover ocupa 100%: sem border-radius */
   border-radius: 0;
   text-decoration: none;
   color: var(--color-text-title);
@@ -117,34 +114,32 @@
 }
 
 .sb-flyout {
-  /* posicionado relativo ao grupo, aparece à direita do sidebar */
   position: absolute;
   top: 0;
   left: 100%;
   height: auto;
-  max-height: 80vh;
-  min-width: 15rem;
+
+  min-width: 14rem;
   z-index: 60;
-  padding: 1.5rem 0 1.5rem 0.5rem;
+
   background: var(--color-card-background);
   display: flex;
 
   justify-content: center;
   align-items: flex-start;
   flex-direction: column;
-  gap: 1rem;
 
   border: 1px solid var(--color-card-border);
-  border-left: none;
   border-radius: 0 1rem 1rem 0;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 
   opacity: 0;
   visibility: hidden;
   transform: translateX(-0.25rem);
-  transition: opacity 0.15s ease, transform 0.15s ease, visibility 0.15s;
+  transition:
+    opacity 0.15s ease,
+    transform 0.15s ease,
+    visibility 0.15s;
 
-  /* ponte invisível: mantém o hover ao atravessar o gap até o flyout */
   &::before {
     content: '';
     position: absolute;
@@ -155,7 +150,6 @@
   }
 }
 
-/* Abre no hover do grupo (e continua abrindo por clique via --open) */
 .sb-group:hover .sb-flyout,
 .sb-group--open .sb-flyout {
   opacity: 1;
@@ -163,21 +157,11 @@
   transform: translateX(0);
 }
 
-.sb-flyout__title {
-  display: block;
-  padding: 0.25rem 0.5rem 0.5rem;
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--color-text-title);
-}
-
 .sb-flyout__link {
   display: flex;
-  /* o <a> é o bloco inteiro: hover ocupa toda a largura */
   width: 100%;
-  padding: 0.25rem 0.5rem 0.5rem;
+  padding: 2rem 0rem 2.1rem 1rem;
+  border-radius: 0;
   letter-spacing: 0.04em;
   align-items: center;
   gap: 0.5rem;
@@ -186,13 +170,21 @@
   color: var(--color-text-body);
   transition: background-color 0.15s ease;
 
+  &:first-child {
+    border-radius: 0 1rem 0 0;
+  }
+
+  &:last-child {
+    border-radius: 0 0 1rem 0;
+  }
+
   &:hover {
     background: var(--color-primary-50);
   }
 
   &--active {
     background: var(--color-primary-50);
-    color: var(--color-text-title);
+    color: var(--color-primary-400);
     font-weight: 600;
   }
 }

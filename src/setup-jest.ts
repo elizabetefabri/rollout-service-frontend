@@ -1,7 +1,10 @@
-import 'jest-preset-angular/setup-jest';
+import { setupZonelessTestEnv } from 'jest-preset-angular/setup-env/zoneless';
+import 'jest-fetch-mock';
+
+setupZonelessTestEnv();
 
 // Configurações globais do Jest
-global.fetch = require('jest-fetch-mock');
+(global as any).fetch = fetch;
 
 // Mock de localStorage
 const localStorageMock = {
@@ -13,7 +16,7 @@ const localStorageMock = {
   key: jest.fn(),
 };
 
-global.localStorage = localStorageMock;
+(global as any).localStorage = localStorageMock;
 
 // Mock de sessionStorage
 const sessionStorageMock = {
@@ -25,12 +28,12 @@ const sessionStorageMock = {
   key: jest.fn(),
 };
 
-global.sessionStorage = sessionStorageMock;
+(global as any).sessionStorage = sessionStorageMock;
 
 // Mock de window.matchMedia
 Object.defineProperty(window, 'matchMedia', {
   writable: true,
-  value: jest.fn().mockImplementation(query => ({
+  value: jest.fn().mockImplementation((query: string) => ({
     matches: false,
     media: query,
     onchange: null,
@@ -43,14 +46,14 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock de ResizeObserver
-global.ResizeObserver = jest.fn().mockImplementation(() => ({
+(global as any).ResizeObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),
 }));
 
 // Mock de IntersectionObserver
-global.IntersectionObserver = jest.fn().mockImplementation(() => ({
+(global as any).IntersectionObserver = jest.fn().mockImplementation(() => ({
   observe: jest.fn(),
   unobserve: jest.fn(),
   disconnect: jest.fn(),

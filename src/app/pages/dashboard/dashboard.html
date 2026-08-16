@@ -1,5 +1,11 @@
 <section class="dash">
-  <h1 class="dash__title">Dashboard</h1>
+  <!-- Header da página (sem busca/ação nesta tela) -->
+  <app-page-header
+    title="Dashboard"
+    [profile]="profile"
+    [updatedAt]="updatedAt"
+    [showToolbarRow]="false"
+  />
 
   <div
     class="backend-status"

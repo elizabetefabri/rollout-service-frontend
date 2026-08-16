@@ -3,13 +3,7 @@
   <div class="st-state st-state--error" role="alert">
     <app-icon name="triangle-alert" [size]="28" />
     <p class="st-state__title">{{ errorMessage() }}</p>
-    <button
-      pButton
-      type="button"
-      severity="secondary"
-      size="small"
-      (click)="retry.emit()"
-    >
+    <button pButton type="button" severity="secondary" size="small" (click)="retry.emit()">
       <app-icon name="rotate-cw" [size]="16" />
       <span>Tentar novamente</span>
     </button>
@@ -37,11 +31,17 @@
       [dataKey]="dataKey()"
       [showCurrentPageReport]="true"
       currentPageReportTemplate="{first}–{last} de {totalRecords}"
+      (selectionChange)="selectionChange.emit($event)"
       styleClass="p-datatable-sm st-table"
     >
       <!-- Cabeçalho -->
       <ng-template pTemplate="header">
         <tr>
+          @if (showSelection()) {
+            <th [pSelectableRow]="undefined" styleClass="st-checkbox-col">
+              <p-tableHeaderCheckbox />
+            </th>
+          }
           @for (col of columns(); track col.field) {
             @if (col.sortable) {
               <th
@@ -66,7 +66,7 @@
             }
           }
           @if (actions().length) {
-            <th class="st-actions-col st-align-right">Ações</th>
+            <th class="st-actions-col st-align-center">Ações</th>
           }
         </tr>
       </ng-template>
@@ -74,6 +74,11 @@
       <!-- Corpo -->
       <ng-template pTemplate="body" let-row>
         <tr class="st-row" (click)="rowClick.emit(row)">
+          @if (showSelection()) {
+            <td styleClass="st-checkbox-col">
+              <p-tableCheckbox [value]="row" />
+            </td>
+          }
           @for (col of columns(); track col.field) {
             <td
               [class.st-hide-mobile]="col.hideOnMobile"
@@ -121,11 +126,9 @@
                 @case ('link') {
                   @if (linkTarget(col, row); as target) {
                     @if (isRouterLink(target)) {
-                      <a
-                        class="st-link"
-                        [routerLink]="target"
-                        (click)="$event.stopPropagation()"
-                      >{{ cellValue(col, row) }}</a>
+                      <a class="st-link" [routerLink]="target" (click)="$event.stopPropagation()">{{
+                        cellValue(col, row)
+                      }}</a>
                     } @else {
                       <a
                         class="st-link"
@@ -133,7 +136,8 @@
                         [attr.target]="col.external ? '_blank' : null"
                         [attr.rel]="col.external ? 'noopener noreferrer' : null"
                         (click)="$event.stopPropagation()"
-                      >{{ cellValue(col, row) }}</a>
+                        >{{ cellValue(col, row) }}</a
+                      >
                     }
                   } @else {
                     <span>{{ cellValue(col, row) }}</span>
@@ -142,7 +146,10 @@
                 @case ('custom') {
                   @if (templateFor(col); as tpl) {
                     <ng-container
-                      *ngTemplateOutlet="tpl; context: { $implicit: row, value: cellValue(col, row) }"
+                      *ngTemplateOutlet="
+                        tpl;
+                        context: { $implicit: row, value: cellValue(col, row) }
+                      "
                     />
                   } @else {
                     <span>{{ cellValue(col, row) }}</span>
@@ -152,7 +159,8 @@
                   <span
                     [pTooltip]="tooltip(col, row) ?? ''"
                     [tooltipDisabled]="!tooltip(col, row)"
-                  >{{ cellValue(col, row) }}</span>
+                    >{{ cellValue(col, row) }}</span
+                  >
                 }
               }
             </td>
@@ -160,7 +168,7 @@
 
           <!-- Célula isolada de ações -->
           @if (actions().length) {
-            <td class="st-actions-cell st-align-right">
+            <td class="st-actions-cell st-align-center">
               <div class="st-actions">
                 @for (act of visibleActions(row); track act.key) {
                   <button
@@ -170,8 +178,6 @@
                     rounded
                     size="small"
                     severity="secondary"
-                    [pTooltip]="act.label"
-                    tooltipPosition="top"
                     [disabled]="isDisabled(act, row)"
                     (click)="onAction(act.key, row, $event)"
                     [attr.aria-label]="act.label"
@@ -189,6 +195,9 @@
       <ng-template pTemplate="loadingbody">
         @for (r of skeletonRows(); track r) {
           <tr>
+            @if (showSelection()) {
+              <td><p-skeleton height="1rem" width="2rem" /></td>
+            }
             @for (col of columns(); track col.field) {
               <td [class.st-hide-mobile]="col.hideOnMobile">
                 <p-skeleton height="1rem" [width]="col.type === 'progress' ? '80%' : '60%'" />
@@ -204,7 +213,11 @@
       <!-- Estado vazio -->
       <ng-template pTemplate="emptymessage">
         <tr>
-          <td [attr.colspan]="columns().length + (actions().length ? 1 : 0)">
+          <td
+            [attr.colspan]="
+              columns().length + (actions().length ? 1 : 0) + (showSelection() ? 1 : 0)
+            "
+          >
             <div class="st-state st-state--empty">
               <app-icon name="inbox" [size]="28" />
               <p class="st-state__title">{{ emptyMessage() }}</p>

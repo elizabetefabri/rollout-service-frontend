@@ -5,8 +5,9 @@
 
 .st-wrapper {
   position: relative;
+
   border: 1px solid var(--color-card-border);
-  border-radius: 0.75rem;
+  border-radius: 0.3rem;
   background: var(--color-card-background);
   overflow: hidden;
 }
@@ -32,16 +33,22 @@
     font-weight: 600;
     color: var(--color-text-secondary);
     white-space: nowrap;
+    padding: 3rem;
+    background: var(--color-neutral-200);
+    border-bottom: 1px solid var(--color-card-border);
   }
 
   :is(td) {
     font-size: 0.875rem;
     color: var(--color-text-body);
     vertical-align: middle;
+    padding: 4rem;
   }
 }
 
 .st-th {
+  padding: 0.5rem;
+
   display: inline-flex;
   align-items: center;
   gap: 0.25rem;
@@ -52,6 +59,10 @@
 }
 
 /* ---- Zebra (linhas alternadas) ---- */
+:host ::ng-deep .st-table tbody > tr:nth-child(odd) > td {
+  background: var(--color-background-page);
+}
+
 :host ::ng-deep .st-table tbody > tr:nth-child(even) > td {
   background: var(--color-neutral-100);
 }
@@ -61,18 +72,24 @@
 }
 
 /* ---- Alinhamentos ---- */
-.st-align-left { text-align: left; }
-.st-align-center { text-align: center; }
-.st-align-right { text-align: right; }
+.st-align-left {
+  text-align: left;
+}
+.st-align-center {
+  text-align: center;
+}
+.st-align-right {
+  text-align: right;
+}
 
 /* ---- Célula: código / versão (SHA) ---- */
 .st-code {
   display: inline-block;
-  padding: 0.125rem 0.5rem;
+  padding: 0.25rem 0.5rem;
   border-radius: 0.375rem;
   background: var(--color-background-page);
   border: 1px solid var(--color-card-border);
-  font-family: ui-monospace, "SFMono-Regular", "SF Mono", Menlo, monospace;
+  font-family: ui-monospace, 'SFMono-Regular', 'SF Mono', Menlo, monospace;
   font-size: 0.75rem;
   color: var(--color-text-body);
 }
@@ -111,7 +128,7 @@
 
 /* ---- Célula: link ---- */
 .st-link {
-  color: var(--color-info-500);
+  color: var(--color-text-secondary);
   text-decoration: none;
 
   &:hover {
@@ -128,7 +145,13 @@
   display: inline-flex;
   align-items: center;
   gap: 0.125rem;
-  justify-content: flex-end;
+  justify-content: center;
+}
+
+/* ---- Célula: checkbox ---- */
+.st-checkbox-col {
+  width: 2.5rem;
+  text-align: center;
 }
 
 /* ---- Estados: vazio / erro ---- */

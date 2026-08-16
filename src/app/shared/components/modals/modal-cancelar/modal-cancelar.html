@@ -1,0 +1,26 @@
+<p-dialog
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  styleClass="modal-cancelar"
+  [header]="title()"
+>
+  <div class="modal-cancelar__content">
+    <p>{{ message() }}</p>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <div class="modal-cancelar__footer">
+      <button
+        pButton
+        type="button"
+        severity="secondary"
+        [outlined]="true"
+        label="Cancelar"
+        (click)="onCancel()"
+      ></button>
+      <button pButton type="button" severity="danger" label="Enviar" (click)="onConfirm()"></button>
+    </div>
+  </ng-template>
+</p-dialog>
