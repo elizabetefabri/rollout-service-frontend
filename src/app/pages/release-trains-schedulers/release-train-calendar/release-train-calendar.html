@@ -28,6 +28,8 @@
     </div>
 
     <div class="calendar__controls">
+      <ng-content select="[rtsToolbar]"></ng-content>
+
       <!-- <select
         class="calendar__select"
         [value]="currentDate().getMonth()"
@@ -84,16 +86,16 @@
             {{ day.dayOfMonth }}
           </a>
           @if (day.isToday) {
-            <span class="calendar__day-badge"></span>
+            <span class="calendar__day-badge">day-badge</span>
           }
         </header>
 
         <main class="calendar__day-main">
-          <p class="calendar__day-note">Sem agendamentos</p>
+          <p class="calendar__day-note">day-note</p>
         </main>
 
         <footer class="calendar__day-footer">
-          <span class="calendar__day-weekday"></span>
+          <span class="calendar__day-weekday">day-weekday-footer</span>
         </footer>
       </div>
     }

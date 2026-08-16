@@ -46,11 +46,11 @@ Object.defineProperty(window, 'matchMedia', {
 });
 
 // Mock de ResizeObserver
-(global as any).ResizeObserver = jest.fn().mockImplementation(() => ({
-  observe: jest.fn(),
-  unobserve: jest.fn(),
-  disconnect: jest.fn(),
-}));
+(global as any).ResizeObserver = class {
+  observe() {}
+  unobserve() {}
+  disconnect() {}
+};
 
 // Mock de IntersectionObserver
 (global as any).IntersectionObserver = jest.fn().mockImplementation(() => ({

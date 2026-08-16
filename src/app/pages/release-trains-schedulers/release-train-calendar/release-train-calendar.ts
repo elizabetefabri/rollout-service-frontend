@@ -103,21 +103,6 @@ export class ReleaseTrainCalendar {
       });
     }
 
-    // Dias do mês seguinte para completar a última semana
-    const remainingCells = (7 - (days.length % 7)) % 7;
-    for (let day = 1; day <= remainingCells; day++) {
-      const d = new Date(year, month + 1, day);
-      d.setHours(0, 0, 0, 0);
-
-      days.push({
-        date: d,
-        dayOfMonth: day,
-        isCurrentMonth: false,
-        isToday: d.getTime() === today.getTime(),
-        isPast: d.getTime() < today.getTime(),
-      });
-    }
-
     return days;
   });
 

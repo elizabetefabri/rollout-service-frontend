@@ -4,6 +4,7 @@
   [draggable]="false"
   [resizable]="false"
   styleClass="modal-cancelar"
+  [style]="{ width: 'min(100%, 37rem)' }"
   [header]="title()"
 >
   <div class="modal-cancelar__content">
@@ -20,7 +21,14 @@
         label="Cancelar"
         (click)="onCancel()"
       ></button>
-      <button pButton type="button" severity="danger" label="Enviar" (click)="onConfirm()"></button>
+      <button
+        pButton
+        type="button"
+        severity="primary"
+        class="modal-cancelar__confirm"
+        label="Confirmar"
+        (click)="onConfirm()"
+      ></button>
     </div>
   </ng-template>
 </p-dialog>

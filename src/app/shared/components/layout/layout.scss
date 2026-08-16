@@ -11,10 +11,8 @@
 /* ---- Sidebar ---- */
 .layout__sidebar {
   width: 7rem;
-  flex-shrink: 0;
-  position: sticky;
-  top: 0;
-  height: 100vh;
+  position: fixed;
+  inset: 0 auto 0 0;
   z-index: 30;
 }
 
@@ -26,6 +24,7 @@
 .layout__main {
   flex: 1;
   min-width: 0;
+  margin-left: 7rem;
   display: flex;
   flex-direction: column;
 }
@@ -72,14 +71,16 @@
 /* ---- Responsivo: sidebar vira drawer ---- */
 @media (max-width: 63.9375rem) {
   .layout__sidebar {
-    position: fixed;
-    inset: 0 auto 0 0;
     transform: translateX(-100%);
     transition: transform 0.25s ease;
 
     @media (prefers-reduced-motion: reduce) {
       transition: none;
     }
+  }
+
+  .layout__main {
+    margin-left: 0;
   }
 
   .layout--nav-open .layout__sidebar {
